@@ -49,6 +49,9 @@ class Reads:
     		print(x.span())
 
 	def detect_motifs(motifs, read):
+		'''
+		Function that detects motifs within read and returns their positions within the read
+		'''
 		y = []
 		matches = re.finditer(r'(?=(motif))', read)
 
@@ -95,7 +98,9 @@ with open(m_in, 'r') as motif, open(f1l, 'r') as f:
 			detect_motifs()
 
 
-
+## When looping through the fasta lines, make sure to keep length of longest fasta line
+# use it to standardize width of regions in output image
+# make height of motifs dynamic too? divide by max number of motifs in a given fasta line
 
 
 	
