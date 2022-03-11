@@ -1,7 +1,7 @@
 import argparse
 import cairo
 import regex as re
-import Bioinfo
+#import Bioinfo
 
 
 parser = argparse.ArgumentParser()
@@ -32,28 +32,28 @@ class Reads:
 		self.read = read
 		self.nt_dict = nt_dict
 
-	def create_re(read,nt_dict):
+	def create_re(self, read,nt_dict):
 		new = ""
     
-    	for ch in read:
-        	if ch in nt_dict.keys():
-            	new+=nt_dict[ch]
-        	else:
-            	new+=ch
-    	return(new)
+		for ch in read:
+			if ch in nt_dict.keys():
+				new+=nt_dict[ch]
+			else:
+				new+=ch
+		return(new)
 	
-	def detect_exon(read):
+	def detect_exon(self, read):
 		matches = re.finditer(r'[A-Z]+', gene)
 
 		for x in matches:
-    		print(x.span())
+			print(x.span())
 
-	def detect_motifs(motifs, read):
+	def detect_motifs(self, motifs, read):
 		y = []
 		matches = re.finditer(r'(?=(motif))', read)
 
 		for x in matches:
-    		y += [((x.start(1), x.end(1)))]
+			y += [((x.start(1), x.end(1)))]
 
 		return(y)
 
@@ -84,7 +84,7 @@ with open(m_in, 'r') as motif, open(f1l, 'r') as f:
 	for line in motif:
 		line = line.strip()
 		m = Reads(line, nt_dict)
-		motifs += m.create_re(line)
+		motifs += m.create_re(line, nt_dict)
 
 ## determine locations of exons, add to pycairo dict	
 	for fa in reads:
@@ -92,7 +92,7 @@ with open(m_in, 'r') as motif, open(f1l, 'r') as f:
 		cairo_dict[fa[0]] += r.detect_exon(fa[1]) #adds coordinates of exon to first position in dictionary
 
 		for m in motifs:
-			detect_motifs()
+			m.detect_motifs()
 
 
 
